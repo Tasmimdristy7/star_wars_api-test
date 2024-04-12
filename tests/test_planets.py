@@ -14,7 +14,7 @@ class TestPlanets:
         @pytest.mark.parametrize("planet_id, expected_name", [
             (1, 'Tatooine'),
             (2, 'Alderaan'),
-            # Add more planets as needed
+      
         ])
         def test_planet_details(self, planet_id, expected_name):
             """Test fetching details for various planets."""

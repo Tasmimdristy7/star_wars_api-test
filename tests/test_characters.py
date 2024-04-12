@@ -1,20 +1,22 @@
-# tests/test_characters.py
 import pytest
 import requests
+from os import getenv
 from config import BASE_URL
 
 class TestCharacters:
     @pytest.fixture(scope="class")
-    def session(self, request):
-        request.cls.session = requests.Session()
-        request.cls.base_url = BASE_URL
+    def setup_session(self, request):
+        """Fixture to initialize a requests Session for use in all tests in this class."""
+        session = requests.Session()
+        request.cls.session = session
+        request.cls.base_url = getenv('SWAPI_BASE_URL', BASE_URL)
 
-    @pytest.mark.usefixtures("session")
+    @pytest.mark.usefixtures("setup_session")
     class TestWithSession:
         @pytest.mark.parametrize("character_id, expected_name", [
             (1, 'Luke Skywalker'),
             (2, 'C-3PO'),
-            # Add more characters as needed
+           
         ])
         def test_character_details(self, character_id, expected_name):
             """Test fetching details for various characters."""
